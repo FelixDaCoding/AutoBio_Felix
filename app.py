@@ -2,6 +2,7 @@
 Felix Kristian T. Ponce
 """
 from datetime import date
+import os
 
 import numpy as np
 import pandas as pd
@@ -13,6 +14,7 @@ import streamlit as st
 NAME = "Felix Kristian T. Ponce"
 SECTION = "F1"
 EMAIL = "xtian1104@gmail.com"
+PHONE = "09959943926"
 BIRTHDAY = date(2005, 11, 4)
 
 st.set_page_config(
@@ -28,7 +30,6 @@ def age_today() -> int:
 
 
 # --------------------------------------------------------------------------
-# Data (edit these numbers so they reflect you honestly)
 # --------------------------------------------------------------------------
 SKILLS = pd.DataFrame(
     {
@@ -50,7 +51,7 @@ SKILLS = pd.DataFrame(
             "Soft Skills",
             "Development",
         ],
-        "Level": [70, 70, 65, 70, 80, 85, 35],
+        "Level": [75, 60, 65, 75, 90, 95, 40],
     }
 )
 
@@ -69,22 +70,25 @@ MILESTONES = pd.DataFrame(
 PROJECTS = {
     "LevelUP (Capstone)": {
         "icon": "💪",
+        "image": "assets/levelup_capstone.jpg",
         "role": "Backend developer. I built the backend of our capstone workout app.",
-        "tools": "JavaFX (used for the front end); [EDIT ME: backend language / database]",
-        "outcome": "[EDIT ME: outcome or link]",
+        "tools": "JavaFX (used for the front end); [ME: backend language / database]",
+        "outcome": "[https://github.com/FelixDaCoding/CAPSTONE-CSIT227-F2-TEAMPURA_TEST.git]",
         "details": "A workout app made as our capstone. I handled the backend while the front end was built with JavaFX. [EDIT ME: add 1-2 sentences on what the app does.]",
     },
     "Game Jam: Team Paulina (June 2026)": {
         "icon": "🕹️",
+        "image": "assets/game_jam_paulina.png",
         "role": "Idea creator and backend developer. I usually leave the front end to teammates.",
-        "tools": "[EDIT ME: game engine / languages used]",
-        "outcome": "[EDIT ME: game name, result, or link] (team name: Paulina)",
+        "tools": "[ME: Godot / languages used]",
+        "outcome": "[https://github.com/donmerveilleu/Pauli.git] (team name: Paulina)",
         "details": "I joined a game jam in June 2026 as part of team Paulina. I came up with the game idea and handled the backend logic.",
     },
     "School Water Refilling Station (Concept)": {
         "icon": "💧",
+        "image": "assets/water_refilling_station.png",
         "role": "Project creator. I came up with and developed the idea.",
-        "tools": "[EDIT ME: tools used, if any]",
+        "tools": "[ME: used HTML,CSS, and Python and also Used Supabase as database]",
         "outcome": "A concept project that tackles a problem in school. It was not actually put into use.",
         "details": "A water refilling idea for our school, made as a class project to solve a real school problem. It is based on that problem and was never deployed or used in real life.",
     },
@@ -104,10 +108,13 @@ if "feedback" not in st.session_state:
 # --------------------------------------------------------------------------
 def render_sidebar():
     with st.sidebar:
+        if os.path.exists("assets/profile.jpg"):
+            st.image("assets/profile.jpg", use_container_width=True)
         st.header(NAME)
         st.caption(f"CSIT 349 · Section {SECTION}")
         st.write("3rd year BS Computer Science")
         st.write(f"📧 {EMAIL}")
+        st.write(f"📱 {PHONE}")
         st.divider()
 
         visitor = st.text_input("Your name", placeholder="Type your name")
@@ -138,6 +145,8 @@ def render_header(visitor: str):
 def render_about():
     col_facts, col_text = st.columns([1, 2], gap="large")
     with col_facts:
+        if os.path.exists("assets/profile.jpg"):
+            st.image("assets/profile.jpg", caption=NAME, use_container_width=True)
         st.subheader("Quick facts")
         st.write("🎓 3rd year BS Computer Science")
         st.write("🏫 Cebu Institute of Technology - University")
@@ -255,16 +264,18 @@ def render_projects():
     show_details = st.checkbox("Show more details", value=True)
 
     p = PROJECTS[choice]
-    col_a, col_b = st.columns(2, gap="large")
+    col_a, col_b = st.columns([1, 1], gap="large")
     with col_a:
         st.subheader(f"{p['icon']} {choice}")
         st.write(f"**My role:** {p['role']}")
         st.write(f"**Tools:** {p['tools']}")
-    with col_b:
         st.write(f"**Outcome:** {p['outcome']}")
         if show_details:
             with st.expander("About this project", expanded=True):
                 st.write(p["details"])
+    with col_b:
+        if "image" in p and os.path.exists(p["image"]):
+            st.image(p["image"], caption=f"{choice} Preview", use_container_width=True)
 
     st.divider()
     st.caption("All projects")
@@ -279,6 +290,7 @@ def build_bio_text() -> str:
         f"# {NAME}",
         "3rd year BS Computer Science, Cebu Institute of Technology - University",
         f"Email: {EMAIL}",
+        f"Phone: {PHONE}",
         "",
         "## Goal",
         "Software developer / game developer making apps and games for many users.",
@@ -318,6 +330,7 @@ def render_contact():
     with col_info:
         st.subheader("Reach me")
         st.write(f"📧 {EMAIL}")
+        st.write(f"📱 {PHONE}")
         st.download_button(
             "⬇️ Download my bio (.md)",
             data=build_bio_text(),
