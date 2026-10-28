@@ -139,6 +139,8 @@ def render_header(visitor: str):
     st.subheader("Aspiring software and game developer")
     if visitor.strip():
         st.write(f"Welcome, **{visitor.strip()}**! Thanks for visiting my page.")
+    else:
+        st.write("Hello Welcome To my AutoBiography!!!")
     st.divider()
 
 
