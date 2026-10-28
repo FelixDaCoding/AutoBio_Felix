@@ -1,6 +1,6 @@
 # Felix Kristian T. Ponce | Autobiography & Portfolio
 
-CSIT 349 (Applied AI), Section F1. Built with Streamlit.
+Hello Welcome To my AutoBiography!!!
 
 ## Run
     pip install -r requirements.txt
